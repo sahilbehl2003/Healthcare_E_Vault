@@ -69,7 +69,7 @@ Replace `<deployed_contract_address>` with the address provided after deployment
 Add files to your account with:
 
 ```javascript
-await uploadInstance.add("<your_account_address>", "ipfs://example-file-url");
+await uploadInstance.add("<your_account_address>", "ipfs://file1");
 await uploadInstance.add("<your_account_address>", "ipfs://file2");
 await uploadInstance.add("<your_account_address>", "ipfs://file3");
 ```
