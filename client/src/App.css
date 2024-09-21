@@ -1,0 +1,118 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: url('https://your-image-url.jpg') no-repeat center center fixed; /* Replace with your image URL */
+  background-size: cover; /* Ensures the image covers the entire background */
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f4f8;
+}
+
+.App {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white for better readability */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 1200px;
+  width: 100%;
+  position: relative; /* For proper stacking context */
+}
+
+/* Heading */
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  color: #2b6cb0; /* Healthcare blue */
+  margin-bottom: 1.5rem;
+}
+
+/* Account Info */
+p {
+  font-size: 1.2rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+/* Buttons */
+.share {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background: #38a169; /* Green healthcare button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.share:hover {
+  background: #2f855a;
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Background */
+.modal-bg {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Gradient */
+.bg {
+  animation: slide 6s ease-in-out infinite alternate;
+  background-image: linear-gradient(60deg, #81e6d9 50%, #319795 50%);
+  opacity: 0.8;
+  z-index: -1;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(25%);
+  }
+}
+
+
+.bg2 {
+  animation-direction: alternate-reverse;
+  animation-duration: 8s;
+}
+
+.bg3 {
+  animation-duration: 10s;
+}
+
+.footer {
+  position: fixed; 
+  height: 90px;
+  bottom: 0; 
+  left: 0; 
+  width: 100%; 
+  text-align: center; 
+  padding: 10px 0; 
+  background-color: rgba(248, 248, 248, 0.8); /* Semi-transparent footer */
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
