@@ -11,66 +11,90 @@ function App() {
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-
     const loadProvider = async () => {
-      if (provider) {
-        window.ethereum.on("chainChanged", () => {
-          window.location.reload();
-        });
+      if (window.ethereum) {
+        try {
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        window.ethereum.on("accountsChanged", () => {
-          window.location.reload();
-        });
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
-        const address = await signer.getAddress();
-        setAccount(address);
-        let contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+          window.ethereum.on("chainChanged", () => {
+            window.location.reload();
+          });
+          window.ethereum.on("accountsChanged", () => {
+            window.location.reload();
+          });
 
-        const contract = new ethers.Contract(
-          contractAddress,
-          Upload.abi,
-          signer
-        );
-        //console.log(contract);
-        setContract(contract);
-        setProvider(provider);
+          await provider.send("eth_requestAccounts", []);
+
+          const signer = provider.getSigner();
+          const address = await signer.getAddress();
+          setAccount(address);
+
+          const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+          const contract = new ethers.Contract(contractAddress, Upload.abi, signer);
+
+          setContract(contract);
+          setProvider(provider);
+        } catch (error) {
+          console.error("Error connecting to the contract or MetaMask:", error);
+        } finally {
+          setLoading(false);
+        }
       } else {
-        console.error("Metamask is not installed");
+        alert("Please install MetaMask to use this app.");
+        setLoading(false);
       }
     };
-    provider && loadProvider();
+
+    loadProvider();
   }, []);
+
   return (
     <>
-      {!modalOpen && (
-        <button className="share" onClick={() => setModalOpen(true)}>
-          Share
-        </button>
-      )}
-      {modalOpen && (
-        <Modal setModalOpen={setModalOpen} contract={contract}></Modal>
-      )}
+      {loading ? (
+        <div className="App">
+          <h1 style={{ color: "white" }}>Loading...</h1>
+        </div>
+      ) : (
+        <>
+          {!modalOpen && (
+            <button className="share" onClick={() => setModalOpen(true)}>
+              Share
+            </button>
+          )}
+          {modalOpen && contract && (
+            <Modal setModalOpen={setModalOpen} contract={contract}></Modal>
+          )}
 
-      <div className="App">
-        <h1 style={{ color: "white" }}>Gdrive 3.0</h1>
-        <div class="bg"></div>
-        <div class="bg bg2"></div>
-        <div class="bg bg3"></div>
+          <div className="App">
+            <h1 style={{ color: "white" }}>Gdrive 3.0</h1>
+            <div className="bg"></div>
+            <div className="bg bg2"></div>
+            <div className="bg bg3"></div>
 
-        <p style={{ color: "white" }}>
-          Account : {account ? account : "Not connected"}
-        </p>
-        <FileUpload
-          account={account}
-          provider={provider}
-          contract={contract}
-        ></FileUpload>
-        <Display contract={contract} account={account}></Display>
-      </div>
+            <p style={{ color: "white" }}>
+              Account : {account || "Not connected"}
+            </p>
+
+            {contract && (
+              <FileUpload
+                account={account}
+                provider={provider}
+                contract={contract}
+              ></FileUpload>
+            )}
+
+            {contract && (
+              <Display
+                contract={contract}
+                account={account}
+              ></Display>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 }
