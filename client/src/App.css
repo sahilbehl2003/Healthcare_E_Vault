@@ -2,8 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background: url('https://your-image-url.jpg') no-repeat center center fixed; /* Replace with your image URL */
-  background-size: cover; /* Ensures the image covers the entire background */
+  background-size: cover;
 }
 
 body {
@@ -16,19 +15,18 @@ body {
 .App {
   text-align: center;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white for better readability */
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   max-width: 1200px;
   width: 100%;
-  position: relative; /* For proper stacking context */
+  position: relative; 
 }
 
-/* Heading */
 h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 3rem;
-  color: #2b6cb0; /* Healthcare blue */
+  color: #2b6cb0; 
   margin-bottom: 1.5rem;
 }
 
