@@ -17,8 +17,14 @@ contract Upload {
     }
 
     mapping(address => UserFiles) private userFiles;
+    address public owner;
 
-    function add(address _user, string calldata url) external {
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function add(address _user, string memory url) external {
+        require(msg.sender == owner, "Only the owner can perform this action");
         userFiles[_user].files.push(url);
     }
 
@@ -61,10 +67,10 @@ contract Upload {
         return userFiles[msg.sender].accessList;
     }
 
-    function removeFile(uint index) external {
+    function removeFile(uint index) public {
+        require(msg.sender == owner, "Only the owner can perform this action");
         UserFiles storage senderFiles = userFiles[msg.sender];
-        require(index < senderFiles.files.length, "Invalid index");
-
+        require(index < senderFiles.files.length, "Invalid file index");
         senderFiles.files[index] = senderFiles.files[senderFiles.files.length - 1];
         senderFiles.files.pop();
     }
