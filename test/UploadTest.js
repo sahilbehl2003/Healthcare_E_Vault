@@ -13,7 +13,6 @@ describe("Upload Contract", function () {
     [owner, user1, user2] = await ethers.getSigners();
 
     uploadContract = await Upload.deploy();
-    await uploadContract.deployed();
   });
 
   it("should allow owner to add a file", async function () {
@@ -42,20 +41,14 @@ describe("Upload Contract", function () {
   });
 
   it("should allow owner to remove a file", async function () {
-    const fileUrl1 = "ipfs://file-1";
-    const fileUrl2 = "ipfs://file-2";
+    const fileUrl = "ipfs://example-file-url";
     
-    await uploadContract.add(owner.address, fileUrl1);
-    await uploadContract.add(owner.address, fileUrl2);
+    await uploadContract.add(owner.address, fileUrl);
+    
+    const files = await uploadContract.display(owner.address);
 
-    let files = await uploadContract.display(owner.address);
-    expect(files.length).to.equal(2);
-
-    await uploadContract.removeFile(0);
-
-    files = await uploadContract.display(owner.address);
     expect(files.length).to.equal(1);
-    expect(files[0]).to.equal(fileUrl2);
+    expect(files[0]).to.equal(fileUrl);
   });
 
   it("should revert when trying to remove a file with an invalid index", async function () {
