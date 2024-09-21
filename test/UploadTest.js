@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("Upload Contract", function () {
-
   let Upload;
   let uploadContract;
   let owner;
@@ -59,6 +58,10 @@ describe("Upload Contract", function () {
     expect(files[0]).to.equal(fileUrl2);
   });
 
+  it("should revert when trying to remove a file with an invalid index", async function () {
+    await expect(uploadContract.removeFile(999)).to.be.revertedWith("Invalid file index");
+  });
+
   it("should return the access list", async function () {
     await uploadContract.allow(user1.address);
     await uploadContract.allow(user2.address);
@@ -73,9 +76,16 @@ describe("Upload Contract", function () {
   it("should not allow non-owners to add or remove files", async function () {
     const fileUrl = "ipfs://non-owner-file";
 
-    await expect(uploadContract.connect(user1).add(user1.address, fileUrl)).to.be.reverted;
+    await expect(uploadContract.connect(user1).add(user1.address, fileUrl)).to.be.revertedWith("Only the owner can perform this action");
 
-    await expect(uploadContract.connect(user1).removeFile(0)).to.be.reverted;
+    await expect(uploadContract.connect(user1).removeFile(0)).to.be.revertedWith("Only the owner can perform this action");
   });
 
+  it("should not allow non-owners without access to view files", async function () {
+    const fileUrl = "ipfs://example-file-url";
+    
+    await uploadContract.add(owner.address, fileUrl);
+
+    await expect(uploadContract.connect(user1).display(owner.address)).to.be.revertedWith("You don't have access");
+  });
 });
