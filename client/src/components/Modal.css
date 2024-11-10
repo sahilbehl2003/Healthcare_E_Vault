@@ -1,51 +1,90 @@
 .modalBackground {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Darker background for better contrast */
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
-  top: 0; /* Ensure it covers the entire viewport */
-  left: 0; /* Ensure it covers the entire viewport */
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  z-index: 1000; /* Ensure it's above other content */
-}
-
-.modalContainer {
-  width: 400px; /* Adjust as necessary */
-  height: auto; /* Allow height to adjust based on content */
-  border-radius: 12px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: flex;
-  flex-direction: column;
-  padding: 25px; /* Adjust padding as necessary */
-  text-align: center; /* Center text inside modal */
-}
-
-.title {
-  font-size: 1.5rem; /* Title size */
-  margin-bottom: 10px; /* Space below title */
-}
-
-.body {
-  flex: 1; /* Allow body to grow */
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+}
+
+.modalContainer {
+  margin-left:100px;
+  width: 540px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  text-align: center;
+  max-height: 80vh; /* Prevents modal from exceeding the viewport height */
+  overflow: hidden; /* Hides overflow outside the modal */
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.address {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1rem;
+}
+
+.access-list-container {
+  margin-top: 15px;
+  text-align: left;
+  max-height: 200px; /* Max height for the list container */
+  overflow-y: auto; /* Enables scrolling if the content exceeds the max height */
+}
+
+.access-list-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.access-list-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  max-height: 150px; /* Max height for the dropdown */
+  overflow-y: auto; /* Enables scrolling for dropdown if content exceeds height */
 }
 
 .footer {
   display: flex;
-  justify-content: space-between; /* Space buttons */
-  margin-top: 10px; /* Space above footer */
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .footer button {
-  width: 120px; /* Button width */
-  height: 40px; /* Button height */
+  width: 130px;
+  height: 45px;
   border: none;
-  background-color: cornflowerblue;
+  background-color: #007bff;
   color: white;
   border-radius: 8px;
   font-size: 16px;
@@ -53,17 +92,5 @@
 }
 
 #cancelBtn {
-  background-color: crimson; /* Cancel button color */
-}
-
-.address {
-  display: block;
-  margin: auto;
-  height: 30px;
-  width: 280px; /* Input width */
-  text-align: center;
-}
-
-input[type="text"]:focus {
-  background-color: lightblue; /* Input focus color */
+  background-color: #d9534f;
 }

@@ -84,7 +84,6 @@ function App() {
             )}
           </div>
 
-          <div className="footer">Securing Healthcare with Blockchain</div>
         </>
       )}
     </>

@@ -10,26 +10,32 @@ const Display = ({ contract, account }) => {
 
     try {
       dataArray = otherAddress ? await contract.display(otherAddress) : await contract.display(account);
+      console.log("Fetched data array:", dataArray);
     } catch (e) {
       alert("You don't have access or an error occurred.");
       console.error("Error fetching data:", e);
-      return; 
+      return;
     }
 
     if (dataArray.length === 0) {
       alert("No images to display.");
-      setData([]); 
+      setData([]);
       return;
     }
 
     const images = dataArray.map((item, i) => (
-      <a href={item} key={i} target="_blank" rel="noopener noreferrer">
-        <img
-          src={`https://gateway.pinata.cloud/ipfs/${item.substring(6)}`}
-          alt={`Uploaded content ${i}`}
-          className="image-list-item"
-        />
-      </a>
+      <div className="image-card" key={i}>
+        <a href={item} target="_blank" rel="noopener noreferrer">
+          <img
+            src={item}
+            alt={`Uploaded content ${i}`}
+            className="image-list-item"
+          />
+          <div className="overlay">
+            <span className="overlay-text">Uploaded Content {i + 1}</span>
+          </div>
+        </a>
+      </div>
     ));
 
     setData(images);
@@ -37,7 +43,6 @@ const Display = ({ contract, account }) => {
 
   return (
     <div className="display-container">
-      <div className="image-grid">{data}</div>
       <input
         type="text"
         placeholder="Enter Address"
@@ -48,6 +53,7 @@ const Display = ({ contract, account }) => {
       <button className="fetch-btn" onClick={getData}>
         Get Data
       </button>
+      <div className="image-grid">{data}</div>
     </div>
   );
 };
