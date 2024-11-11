@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Display.css";
 
-const Display = ({ contract, account }) => {
+const Display = ({ contract, account, onImageClick }) => {
   const [data, setData] = useState([]);
   const [otherAddress, setOtherAddress] = useState("");
 
@@ -25,7 +25,12 @@ const Display = ({ contract, account }) => {
 
     const images = dataArray.map((item, i) => (
       <div className="image-card" key={i}>
-        <a href={item} target="_blank" rel="noopener noreferrer">
+        <a
+          href={item}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => handleImageClick(e, i, dataArray)}
+        >
           <img
             src={item}
             alt={`Uploaded content ${i}`}
@@ -39,6 +44,15 @@ const Display = ({ contract, account }) => {
     ));
 
     setData(images);
+  };
+
+  const handleImageClick = (e, index, dataArray) => {
+    e.preventDefault();
+    const selectedImage = dataArray[index];
+    console.log("Clicked on Uploaded content", index + 1);
+    console.log("Data for clicked content:", selectedImage);
+    localStorage.setItem("selectedImage", selectedImage);
+    onImageClick(); 
   };
 
   return (

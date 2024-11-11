@@ -1,9 +1,12 @@
 import Upload from "./artifacts/contracts/Upload.sol/Upload.json";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+
 import FileUpload from "./components/FileUpload";
 import Display from "./components/Display";
 import Modal from "./components/Modal";
+import Ocr from "./components/Ocr";
+
 import "./App.css";
 
 function App() {
@@ -12,6 +15,7 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showOcr, setShowOcr] = useState(false); // New state for displaying OCR component
 
   useEffect(() => {
     const loadProvider = async () => {
@@ -27,7 +31,6 @@ function App() {
           });
 
           await provider.send("eth_requestAccounts", []);
-
           const signer = provider.getSigner();
           const address = await signer.getAddress();
           setAccount(address);
@@ -57,6 +60,8 @@ function App() {
         <div className="App">
           <h1>Loading...</h1>
         </div>
+      ) : showOcr ? ( // Display Ocr component if showOcr is true
+        <Ocr onBack={() => setShowOcr(false)} />
       ) : (
         <>
           <div className="bg"></div>
@@ -70,7 +75,7 @@ function App() {
             {contract && (
               <>
                 <FileUpload account={account} provider={provider} contract={contract} />
-                <Display contract={contract} account={account} />
+                <Display contract={contract} account={account} onImageClick={() => setShowOcr(true)} />
               </>
             )}
 
@@ -83,7 +88,6 @@ function App() {
               <Modal setModalOpen={setModalOpen} contract={contract}></Modal>
             )}
           </div>
-
         </>
       )}
     </>
