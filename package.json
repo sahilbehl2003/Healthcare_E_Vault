@@ -25,6 +25,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "tesseract.js": "^5.1.1"
+    "tesseract.js": "^5.1.1",
+    "text-from-image": "^1.1.1"
   }
 }
