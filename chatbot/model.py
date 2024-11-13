@@ -76,7 +76,7 @@ def get_answer(query: str) -> str:
     qa_result = qa_bot()
     try:
         logging.debug(f"Processing query: {query}")
-        response = qa_result({'query': query})
+        response = qa_result.invoke({'query': query})
         logging.debug(f"Query processed successfully.")
         return response['result']
     except Exception as e:
