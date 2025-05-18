@@ -97,63 +97,6 @@ function AI() {
           ]);
       }
   }
-  
-
-    // async function processMessageToChatGPT(chatMessages) {
-    //     const API_KEY = "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"; // Ensure API key is correct
-
-    //     let apiMessages = chatMessages.map((messageObject) => {
-    //         let role = messageObject.sender === "ChatGPT" ? "assistant" : "user";
-    //         return { role: role, content: messageObject.message };
-    //     });
-
-    //     const systemMessage = {
-    //         role: "system",
-    //         content: "Explain all concepts as if explaining to a 10-year-old."
-    //     };
-
-    //     const apiRequestBody = {
-    //         model: "gpt-3.5-turbo",
-    //         messages: [systemMessage, ...apiMessages]
-    //     };
-
-    //     try {
-    //         const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Authorization": `Bearer ${API_KEY}`,
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(apiRequestBody)
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error(`API error ${response.status}: ${response.statusText}`);
-    //         }
-
-    //         const data = await response.json();
-    //         if (!data.choices || data.choices.length === 0) {
-    //             throw new Error("Invalid response structure from API.");
-    //         }
-
-    //         setMessages([
-    //             ...chatMessages,
-    //             {
-    //                 message: data.choices[0].message.content,
-    //                 sender: "ChatGPT"
-    //             }
-    //         ]);
-    //     } catch (error) {
-    //         console.error("Error:", error.message);
-    //         setMessages([
-    //             ...chatMessages,
-    //             {
-    //                 message: "Sorry, I couldn't process your request.",
-    //                 sender: "ChatGPT"
-    //             }
-    //         ]);
-    //     }
-    // }
 
     return (
         <div className="chat-container">
