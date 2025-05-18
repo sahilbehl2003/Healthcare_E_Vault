@@ -37,16 +37,14 @@ const Ocr = ({ onBack }) => {
     }
   }, [imageLink]);
 
-  // Toggle to show AI component
   const openAI = () => setShowAI(true);
-  const handleBackToOcr = () => setShowAI(false);  // New function to go back to OCR
+  const handleBackToOcr = () => setShowAI(false);  
 
-  if (showAI) return <AI extractedText={extractedText} onBack={handleBackToOcr} />;  // Pass extracted text and onBack to AI
-
+  if (showAI) return <AI extractedText={extractedText} onBack={handleBackToOcr} />;  
   return (
     <div className="ocr-container">
       <button className="back-button" onClick={onBack}>← Back</button>
-      {extractedText && (  // Show AI Assistant button only if extractedText is not empty
+      {extractedText && ( 
         <button className="ai-button" onClick={openAI}>
           <i className="ai-icon">🤖</i> AI Assistant
         </button>
