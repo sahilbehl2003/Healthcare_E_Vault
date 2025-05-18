@@ -1,0 +1,12 @@
+langchain
+torch
+ctransformers
+pypdf
+sentence_transformers
+faiss_cpu
+huggingface_hub
+langchain_community
+fastapi
+uvicorn
+langchain_huggingface
+tf-keras

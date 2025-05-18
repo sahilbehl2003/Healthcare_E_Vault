@@ -1,11 +1,12 @@
-import Upload from "./artifacts/contracts/Upload.sol/Upload.json";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import Upload from "./artifacts/contracts/Upload.sol/Upload.json";
 
 import FileUpload from "./components/FileUpload";
 import Display from "./components/Display";
 import Modal from "./components/Modal";
 import Ocr from "./components/Ocr";
+import Login from "./components/Login"; // Import the Login component
 
 import "./App.css";
 
@@ -15,7 +16,8 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showOcr, setShowOcr] = useState(false); // New state for displaying OCR component
+  const [showOcr, setShowOcr] = useState(false);
+  const [user, setUser] = useState(localStorage.getItem("user") || ""); // Load user from localStorage
 
   useEffect(() => {
     const loadProvider = async () => {
@@ -54,13 +56,21 @@ function App() {
     loadProvider();
   }, []);
 
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser("");
+  };
+
   return (
     <>
       {loading ? (
         <div className="App">
           <h1>Loading...</h1>
         </div>
-      ) : showOcr ? ( // Display Ocr component if showOcr is true
+      ) : !user ? ( // Show login if user is not set
+        <Login setUser={setUser} />
+      ) : showOcr ? (
         <Ocr onBack={() => setShowOcr(false)} />
       ) : (
         <>
@@ -70,12 +80,27 @@ function App() {
 
           <div className="App">
             <h1>MedVault</h1>
+            <p>Logged in as: {user}</p>
             <p>Account: {account || "Not connected"}</p>
+
+            <button onClick={handleLogout} className="logout-btn">
+              Logout
+            </button>
 
             {contract && (
               <>
-                <FileUpload account={account} provider={provider} contract={contract} />
-                <Display contract={contract} account={account} onImageClick={() => setShowOcr(true)} />
+                {user === "Doctor" || user==="doctor" ? (
+                  <>
+                    <FileUpload account={account} provider={provider} contract={contract} />
+                    <Display contract={contract} account={account} onImageClick={() => setShowOcr(true)} />
+                  </>
+                ) : (
+                  <>
+                  <p>Welcome, Patient! You can view and manage your records.</p>
+                  <Display contract={contract} account={account} onImageClick={() => setShowOcr(true)} />
+                  </>
+                  
+                )}
               </>
             )}
 
